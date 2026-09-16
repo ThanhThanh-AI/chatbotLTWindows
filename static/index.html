@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>C# Mentor | Trợ giảng lập trình Windows</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/theme.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark">C#</span><div><strong>C# Mentor</strong><small>Windows Programming Lab</small></div></div>
+      <div class="side-section"><span class="eyebrow">GIÁO TRÌNH MÔN HỌC</span><div class="library-card"><div class="file-icon">PDF</div><div><strong id="document-count">1 tài liệu</strong><small id="document-status">Lập trình Windows.pdf</small></div></div><p class="hint">Tài liệu chính thức của học phần đã được khóa trong hệ thống.</p></div>
+      <div class="side-section topics"><span class="eyebrow">GỢI Ý CHỦ ĐỀ</span><button data-question="Giải thích vòng đời của một ứng dụng WinForms">WinForms căn bản <span>↗</span></button><button data-question="So sánh WinForms và WPF, nên chọn công nghệ nào?">WinForms vs WPF <span>↗</span></button><button data-question="Hướng dẫn kết nối C# với cơ sở dữ liệu">Kết nối cơ sở dữ liệu <span>↗</span></button><button data-question="Giải thích async await trong C# bằng ví dụ">Async / await <span>↗</span></button></div>
+      <div class="sidebar-footer"><span class="status-dot"></span><span id="api-status">Đang kiểm tra kết nối Gemini</span></div>
+    </aside>
+    <main class="main-content">
+      <header class="topbar"><div><span class="eyebrow">PHÒNG THỰC HÀNH 01</span><h1>Trợ giảng C# của bạn</h1></div><div class="model-pill"><span class="pulse"></span><span id="model-name">Gemini</span></div></header>
+      <section class="chat-panel">
+        <div class="welcome"><div class="welcome-kicker">HỎI ĐÁP THEO GIÁO TRÌNH</div><h2>Học bằng cách<br /><em>đặt câu hỏi đúng.</em></h2><p>Mình sẽ bám sát giáo trình bạn nạp, giải thích như một giảng viên và đưa ví dụ C# có thể chạy được.</p><div class="starter-grid"><button data-question="Tạo cho tôi lộ trình học C# Windows trong 4 tuần"><span>01</span><strong>Lộ trình học</strong><small>Chia nhỏ mục tiêu theo tuần</small></button><button data-question="Cho tôi một bài tập WinForms về quản lý sinh viên"><span>02</span><strong>Bài tập thực hành</strong><small>Có yêu cầu và gợi ý giải</small></button><button data-question="Quiz 5 câu về lập trình hướng đối tượng trong C#"><span>03</span><strong>Kiểm tra nhanh</strong><small>Ôn tập kiến thức nền tảng</small></button></div></div>
+        <div id="messages" class="messages" aria-live="polite"></div>
+        <form id="chat-form" class="composer"><textarea id="message-input" rows="1" placeholder="Hỏi về C#, WinForms, WPF..." autocomplete="off"></textarea><button type="submit" aria-label="Gửi câu hỏi">Gửi <span>↗</span></button><div class="composer-note">Enter để gửi · Shift + Enter để xuống dòng</div></form>
+      </section>
+    </main>
+  </div>
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+[build]
+  publish = "static"
+  functions = "netlify/functions"
+
+[functions]
+  included_files = ["curriculum/**"]
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
