@@ -27,8 +27,7 @@ API key chỉ nằm ở server và không được gửi xuống trình duyệt.
 4. Vào **Site configuration > Environment variables** và thêm:
 
 ```text
-GEMINI_API_KEY=your_gemini_api_key_here
-GEMINI_MODEL=gemini-3.6-flash
+
 ```
 
 5. Deploy lại site. Netlify tự chạy `npm install` dựa trên `package.json`.
