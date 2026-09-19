@@ -66,7 +66,12 @@ async function chat(event) {
   const payload = JSON.parse(event.body || '{}');
   const question = String(payload.message || '').trim();
   const history = Array.isArray(payload.history) ? payload.history.slice(-8) : [];
-  const documents = await fixedCurriculum();
+  let documents;
+  try {
+    documents = await fixedCurriculum();
+  } catch (error) {
+    return json(503, { error: `Không thể đọc giáo trình trên Netlify: ${error.message}` });
+  }
   if (!question) return json(400, { error: 'Vui lòng nhập câu hỏi.' });
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) return json(503, { error: 'Chưa cấu hình GEMINI_API_KEY trong Netlify Environment variables.' });
@@ -123,7 +128,12 @@ export default async (event) => {
   const route = event.path.split('/').filter(Boolean).pop();
   try {
     if (event.httpMethod === 'GET' && route === 'status') {
-      const documents = await fixedCurriculum();
+      let documents;
+      try {
+        documents = await fixedCurriculum();
+      } catch (error) {
+        return json(503, { configured: Boolean(process.env.GEMINI_API_KEY), error: `Không thể đọc giáo trình trên Netlify: ${error.message}` });
+      }
       const defaultModel = ['gemini', '3.6-flash'].join('-');
       return json(200, { configured: Boolean(process.env.GEMINI_API_KEY), model: process.env.GEMINI_MODEL || defaultModel, documents: documents.map(({ name, text }) => ({ name, characters: text.length })) });
     }
