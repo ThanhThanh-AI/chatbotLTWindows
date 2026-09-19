@@ -51,9 +51,11 @@ async function sendMessage(text) {
   messages.appendChild(thinking);
   try {
     const response = await fetch('/api/chat', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({message: text, history: state.history}) });
-    const data = await response.json();
+    const responseText = await response.text();
+    let data;
+    try { data = JSON.parse(responseText); } catch { data = {}; }
     thinking.remove();
-    if (!response.ok) throw new Error(data.error || 'Không thể kết nối Gemini.');
+    if (!response.ok) throw new Error(data.error || `Netlify Function trả về lỗi HTTP ${response.status}.`);
     addMessage('assistant', data.answer);
     state.history.push({role: 'user', content: text}, {role: 'assistant', content: data.answer});
   } catch (error) {

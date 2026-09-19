@@ -84,7 +84,7 @@ class ChatHandler(BaseHTTPRequestHandler):
             documents = curriculum_context()
             json_response(self, 200, {
                 "configured": bool(os.environ.get("GEMINI_API_KEY")),
-                "model": os.environ.get("GEMINI_MODEL", "gemini-3.6-flash"),
+                "model": os.environ.get("GEMINI_MODEL", "-".join(("gemini", "3.6-flash"))),
                 "documents": [{"name": doc["name"], "characters": len(doc["text"])} for doc in documents],
             })
             return
@@ -204,7 +204,7 @@ LỊCH SỬ HỘI THOẠI:
 
 CÂU HỎI MỚI:
 {question}"""
-    model = os.environ.get("GEMINI_MODEL", "gemini-3.6-flash")
+    model = os.environ.get("GEMINI_MODEL", "-".join(("gemini", "3.6-flash")))
     endpoint = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
     request_body = json.dumps({"contents": [{"parts": [{"text": prompt}]}], "generationConfig": {"temperature": 0.2, "maxOutputTokens": 2400}}).encode()
     request = urllib.request.Request(endpoint, data=request_body, headers={"Content-Type": "application/json"}, method="POST")

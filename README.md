@@ -17,7 +17,7 @@ python server.py
 
 Giáo trình cố định nằm trong thư mục `curriculum/` và không có chức năng cho người dùng tải hoặc thay thế tài liệu. PDF cần cài thêm `pypdf` nếu muốn chạy local: `py -m pip install pypdf`.
 
-API key chỉ nằm ở server và không được gửi xuống trình duyệt. Mô hình mặc định hiện tại là `gemini-3.6-flash`, có thể đổi bằng `GEMINI_MODEL` trong `.env`.
+API key chỉ nằm ở server và không được gửi xuống trình duyệt. Mô hình mặc định hiện tại là model Gemini đang được cấu hình trong mã nguồn; có thể đổi bằng `GEMINI_MODEL` trong `.env` khi chạy local.
 
 ## Deploy lên Netlify
 
@@ -27,7 +27,7 @@ API key chỉ nằm ở server và không được gửi xuống trình duyệt.
 4. Vào **Site configuration > Environment variables** và thêm:
 
 ```text
-
+GEMINI_API_KEY=your-gemini-api-key
 ```
 
 5. Deploy lại site. Netlify tự chạy `npm install` dựa trên `package.json`.

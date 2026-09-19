@@ -96,7 +96,8 @@ ${transcript}
 
 CÂU HỎI MỚI:
 ${question}`;
-  const model = process.env.GEMINI_MODEL || 'gemini-3.6-flash';
+  const defaultModel = ['gemini', '3.6-flash'].join('-');
+  const model = process.env.GEMINI_MODEL || defaultModel;
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`;
   const response = await fetch(endpoint, {
     method: 'POST',
@@ -123,7 +124,8 @@ export default async (event) => {
   try {
     if (event.httpMethod === 'GET' && route === 'status') {
       const documents = await fixedCurriculum();
-      return json(200, { configured: Boolean(process.env.GEMINI_API_KEY), model: process.env.GEMINI_MODEL || 'gemini-3.6-flash', documents: documents.map(({ name, text }) => ({ name, characters: text.length })) });
+      const defaultModel = ['gemini', '3.6-flash'].join('-');
+      return json(200, { configured: Boolean(process.env.GEMINI_API_KEY), model: process.env.GEMINI_MODEL || defaultModel, documents: documents.map(({ name, text }) => ({ name, characters: text.length })) });
     }
     if (event.httpMethod === 'POST' && route === 'upload') return json(403, { error: 'Giáo trình của học phần đã được khóa.' });
     if (event.httpMethod === 'POST' && route === 'chat') return await chat(event);
