@@ -114,7 +114,7 @@ ${transcript}
 
 CÂU HỎI MỚI:
 ${question}`;
-  const defaultModel = ['gemini', '3.6-flash'].join('-');
+  const defaultModel = 'gemini-2.5-flash';
   const model = process.env.GEMINI_MODEL || defaultModel;
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`;
   const response = await fetch(endpoint, {
@@ -147,7 +147,7 @@ export default async (event) => {
       } catch (error) {
         return json(503, { configured: Boolean(process.env.GEMINI_API_KEY), error: `Không thể đọc giáo trình trên Netlify: ${error.message}` });
       }
-      const defaultModel = ['gemini', '3.6-flash'].join('-');
+      const defaultModel = 'gemini-2.5-flash';
       return json(200, { configured: Boolean(process.env.GEMINI_API_KEY), model: process.env.GEMINI_MODEL || defaultModel, documents: documents.map(({ name, text }) => ({ name, characters: text.length })) });
     }
     if (event.httpMethod === 'POST' && route === 'upload') return json(403, { error: 'Giáo trình của học phần đã được khóa.' });

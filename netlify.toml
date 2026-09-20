@@ -4,8 +4,10 @@
 
 [functions]
   included_files = ["curriculum/**"]
+  node_bundler = "esbuild"
 
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/api/:splat"
   status = 200
+
