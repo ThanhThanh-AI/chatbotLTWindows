@@ -4,3 +4,7 @@ __pycache__/
 curriculum/*
 !curriculum/.gitkeep
 !curriculum/*.pdf
+node_modules
+
+# Local Netlify folder
+.netlify

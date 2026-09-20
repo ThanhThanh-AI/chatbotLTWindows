@@ -19,17 +19,55 @@ Giáo trình cố định nằm trong thư mục `curriculum/` và không có ch
 
 API key chỉ nằm ở server và không được gửi xuống trình duyệt. Mô hình mặc định hiện tại là model Gemini đang được cấu hình trong mã nguồn; có thể đổi bằng `GEMINI_MODEL` trong `.env` khi chạy local.
 
-## Deploy lên Netlify
+## Deploy lên Netlify không cần GitHub
 
-1. Đẩy toàn bộ thư mục này lên GitHub/GitLab.
-2. Vào Netlify, chọn **Add new site > Import an existing project** và chọn repository.
-3. Netlify sẽ đọc `netlify.toml`: thư mục publish là `static`, function nằm trong `netlify/functions`.
-4. Vào **Site configuration > Environment variables** và thêm:
+> Không kéo-thả riêng thư mục `static`: cách đó chỉ đưa giao diện tĩnh lên Netlify và không deploy `netlify/functions`, nên chatbot sẽ không gọi được Gemini. Dùng Netlify CLI để deploy trực tiếp cả giao diện, Function và giáo trình.
+
+1. Cài Node.js LTS từ https://nodejs.org/ rồi mở PowerShell mới.
+2. Đăng nhập Netlify:
+
+```powershell
+npx netlify-cli login
+```
+
+3. Di chuyển vào thư mục dự án:
+
+```powershell
+cd D:\DEMO\chatbot_LTWindows
+```
+
+4. Tạo site mới và deploy trực tiếp:
+
+```powershell
+npx netlify-cli deploy --prod --dir=static --functions=netlify/functions
+```
+
+Nếu CLI hỏi tạo site mới, chọn **Create & configure a new site**, sau đó chọn team của bạn. Khi hỏi publish directory, nhập `static`.
+
+5. Thêm API key vào site vừa tạo:
+
+```powershell
+npx netlify-cli env:set GEMINI_API_KEY "API_KEY_MOI_CUA_BAN"
+```
+
+Không đặt API key trong lệnh nếu bạn đang chia sẻ màn hình hoặc lưu lịch sử terminal. Khi đó hãy vào **Netlify → Site configuration → Environment variables** và thêm:
 
 ```text
 GEMINI_API_KEY=your-gemini-api-key
 ```
 
-5. Deploy lại site. Netlify tự chạy `npm install` dựa trên `package.json`.
+6. Deploy lại để Function nhận biến môi trường:
+
+```powershell
+npx netlify-cli deploy --prod --dir=static --functions=netlify/functions
+```
+
+7. Kiểm tra:
+
+```text
+https://TEN-SITE.netlify.app/api/status
+```
+
+Nếu trả về `configured: true` và có `documents`, site đã hoạt động.
 
 Khi chạy trên Netlify, Function đọc PDF cố định từ `curriculum/` nhờ cấu hình `included_files`; file này không nằm trong thư mục publish nên người dùng không thể tải trực tiếp từ website.

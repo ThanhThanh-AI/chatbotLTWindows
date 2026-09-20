@@ -19,6 +19,19 @@ function extensionOf(name) {
   return match ? match[0] : '';
 }
 
+function routeOf(event) {
+  const rawPath = event.path || event.rawPath;
+  if (rawPath) return rawPath.split('?')[0].split('/').filter(Boolean).pop();
+  if (event.rawUrl) {
+    try {
+      return new URL(event.rawUrl).pathname.split('/').filter(Boolean).pop();
+    } catch {
+      return '';
+    }
+  }
+  return '';
+}
+
 async function extractText(name, buffer) {
   const extension = extensionOf(name);
   if (['.txt', '.md', '.cs', '.json', '.csv', '.html'].includes(extension)) {
@@ -125,7 +138,7 @@ ${question}`;
 }
 
 export default async (event) => {
-  const route = event.path.split('/').filter(Boolean).pop();
+  const route = routeOf(event);
   try {
     if (event.httpMethod === 'GET' && route === 'status') {
       let documents;
